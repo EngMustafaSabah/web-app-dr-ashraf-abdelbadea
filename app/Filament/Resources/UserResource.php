@@ -37,14 +37,14 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('roles')
+                Forms\Components\Select::make('role')
                     ->label(__("Roles"))
                     ->multiple()
                     ->relationship('roles','name')->preload(),
                 Forms\Components\Select::make('permissions')
                     ->label(__("Permissions"))
                     ->multiple()
-                    ->relationship('roles','name')->preload()
+                    ->relationship('permissions','name')->preload()
 
             ]);
     }
