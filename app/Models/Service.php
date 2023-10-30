@@ -2,33 +2,25 @@
 
 namespace App\Models;
 
+use App\Filament\Resources\ServiceCategoryResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Sluggable\SlugOptions;
-use Spatie\Translatable\HasTranslations;
-use Spatie\MediaLibrary\HasMedia;
 
-class Blog extends Model implements HasMedia
+class Service extends Model
 {
-    use HasFactory, HasTranslations,InteractsWithMedia,HasSEO;
-
+    use HasFactory;
     public $translatable = ['title','short_description','description'];
     protected $guarded=[];
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
-    }
 
+    public function serviceCategory(){
+        return $this->belongsTo(ServiceCategory::class,"service_category_id","id");
+    }
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('blog_image')->singleFile()
+        $this->addMediaCollection('service_image')->singleFile()
             ->withResponsiveImages();
 //        $this->addMediaCollection('blog_seo_image')->singleFile()
 //            ->withResponsiveImages();
@@ -50,5 +42,6 @@ class Blog extends Model implements HasMedia
             ->withResponsiveImages()
             ->sharpen(10);
     }
+
 
 }

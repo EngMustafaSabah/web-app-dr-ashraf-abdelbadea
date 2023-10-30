@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class service extends Model
+class ServiceCategory extends Model
 {
     use HasFactory;
-    public $translatable = ['title','short_description','description'];
     protected $guarded=[];
 
+    public function services(){
+        return $this->hasMany(Service::class,"service_category_id","id");
+    }
 }

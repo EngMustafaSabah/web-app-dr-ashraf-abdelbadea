@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ServicesResource\Pages;
-use App\Filament\Resources\ServicesResource\RelationManagers;
-use App\Models\Service;
-use App\Models\Services;
+use App\Filament\Resources\HeroesResource\Pages;
+use App\Filament\Resources\HeroesResource\RelationManagers;
+use App\Models\Heros;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ServicesResource extends Resource
+class HeroesResource extends Resource
 {
-    protected static ?string $model = Service::class;
+    protected static ?string $model = Heros::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -24,11 +23,12 @@ class ServicesResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('serviceCategory')
-                    ->label(__("Category"))
-                    ->relationship('serviceCategory','title')->preload(),
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('service_image')->label("Image")
+                Forms\Components\Card::make([
+                    Forms\Components\TextInput::make('title')->label(__('Title'))->translateLabel(),
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('heroes')->label("Image")
+                        ->collection('heroes'),
 
+                ])
             ]);
     }
 
@@ -36,13 +36,15 @@ class ServicesResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')->label(__('Title'))->sortable(),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('heroes')->label("Image"),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -61,9 +63,9 @@ class ServicesResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListServices::route('/'),
-            'create' => Pages\CreateServices::route('/create'),
-            'edit' => Pages\EditServices::route('/{record}/edit'),
+            'index' => Pages\ListHeroes::route('/'),
+            'create' => Pages\CreateHeroes::route('/create'),
+            'edit' => Pages\EditHeroes::route('/{record}/edit'),
         ];
     }
 }

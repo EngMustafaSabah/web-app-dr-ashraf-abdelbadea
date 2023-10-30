@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('patient_id');
             $table->datetime('appointment_time');
             $table->text('note');
             $table->timestamps();
+            $table->unsignedBigInteger('patient_id');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
 
         });

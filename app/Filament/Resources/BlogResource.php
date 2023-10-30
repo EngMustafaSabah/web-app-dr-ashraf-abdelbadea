@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions;
+use RalphJSmit\Filament\SEO\SEO;
 use Spatie\Translatable\HasTranslations;
 
 
@@ -38,8 +39,11 @@ class BlogResource extends Resource
             Forms\Components\RichEditor::make('description')->label(__('Description'))->translateLabel(),
             Forms\Components\Toggle::make('is_visible')->label(__("Visibility")),
             Forms\Components\SpatieMediaLibraryFileUpload::make('blog_image')->label("Image")
-                ->collection('blog_image')
+                ->collection('blog_image'),
 
+            Forms\Components\Card::make([
+                SEO::make()
+            ]),
         ]);
     }
 

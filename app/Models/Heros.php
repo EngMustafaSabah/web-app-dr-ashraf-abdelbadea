@@ -4,34 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
-use Spatie\MediaLibrary\HasMedia;
 
-class Blog extends Model implements HasMedia
+class Heros extends Model implements HasMedia
 {
-    use HasFactory, HasTranslations,InteractsWithMedia,HasSEO;
+    use HasFactory,InteractsWithMedia;
 
-    public $translatable = ['title','short_description','description'];
+
     protected $guarded=[];
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
-    }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('blog_image')->singleFile()
+        $this->addMediaCollection('heroes')->singleFile()
             ->withResponsiveImages();
-//        $this->addMediaCollection('blog_seo_image')->singleFile()
-//            ->withResponsiveImages();
     }
 
     /**
