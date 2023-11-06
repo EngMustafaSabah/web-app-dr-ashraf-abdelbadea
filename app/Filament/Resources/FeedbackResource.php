@@ -39,7 +39,7 @@ class FeedbackResource extends Resource
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('name')->label(__("Name"))->sortable(),
                 Tables\Columns\TextColumn::make('email')->label(__("Email"))->sortable(),
-                Tables\Columns\Tex::make('message')->label(__("Message"))->sortable()->wrap(),
+                Tables\Columns\TextColumn::make('message')->label(__("Message"))->sortable()->wrap(),
                 Tables\Columns\BadgeColumn::make('is_visible')
                     ->color(static function ($state): string {
                         if ($state) {
